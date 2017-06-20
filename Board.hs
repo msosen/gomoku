@@ -11,10 +11,14 @@ instance Show Element where
 	show Empty = "_"
 	show Black = "X"
 	show White = "O"
+	
+instance Show Position where
+	show (Position x y) = show x ++ ", " ++ show y 
 
 instance Eq Board where
 	(Board b1) == (Board b2) = b1 == b2
-	
+
+
 	
 -- Show for Board implementation	
 instance Show Board where
@@ -54,9 +58,10 @@ insertElem (Board board) pos elem = Board [[ (setBoardValue board pos elem xx yy
 
 setBoardValue :: [[Element]] -> Position -> Element -> Int -> Int -> Element 
 setBoardValue board (Position x y) elem xx yy 
-	| (x == xx ) && (y == yy) && ((( board !! x) !! y) == Empty) = elem
-	| otherwise = (( board !! x) !! y)
+	| (x == xx ) && (y == yy) = elem
+	| otherwise = (( board !! yy) !! xx)
 
+--((( board !! x) !! y) == Empty)
 -- Is Board Full
 isFull :: Board -> Bool
 isFull (Board b) = isFilled b
@@ -69,34 +74,29 @@ isRowFilled :: [Element] -> Bool
 isRowFilled [] = True
 isRowFilled (e:es) = (e /= Empty) && (isRowFilled es)
 
+-- First empty position
+--firstEmpty :: Board -> Position
+--firstEmpty (Board board) = (Position x y) where
+		
+
 --Is Game Won
 --using current position and Element from main
 isGameWon :: Board -> Position -> Element -> Bool
 isGameWon (Board board) pos elem = ((fiveInRow board pos elem 1 0) || (fiveInRow board pos elem 1 (-1)) ||(fiveInRow board pos elem 0 1) || (fiveInRow board pos elem (-1) 1))
 
---check
+--check---- 6 bo dwa razy bierze ten od ktorego zaczyna chyba
 fiveInRow :: [[Element]] -> Position -> Element -> Int -> Int -> Bool
-fiveInRow board (Position x y) elem vec1 vec2 = (((length ls1) + (length ls2)) == 5) where
+fiveInRow board (Position x y) elem vec1 vec2 = (((length ls1) + (length ls2)) == 6) where
 		ls1 = takeWhile (== elem) [((board !! xx) !! yy) | xx <- [x,x+vec1..], yy <- [y,y+vec2..]]
 		ls2 = takeWhile (== elem) [((board !! xx) !! yy) | xx <- [x,x-vec1..], yy <- [y,y-vec2..]]
-
-
-
-
-
-
-
-
-
 
 
 
 -- Test -----------
 testisFull = isFull (newFullPar 3)
 testisFull1 = isFull (newBoardPar 3)
-test1 = insertElem (newBoard) (Position 4 4) Black
+test1 x y board= insertElem board (Position x y) Black
 test2 = insertElem (insertElem (newBoard) (Position 4 4) Black) (Position 5 4) White
 test3 = insertElem test2 (Position 5 5) Black
-test4 = insertElem test3 (Position 4 4) White
-	
 
+	
