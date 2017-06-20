@@ -57,7 +57,7 @@ playGame gameState = do
 								printBoard userGameState
 								putStrLn "Wygrałes "
 							else do
-								let compGameState = userGameState {cur_user = Black, cur_position = (Position (xcord - 4) (ycord - 3)),cur_board = (insertElem (cur_board gameState) (Position (xcord - 4) (ycord - 3)) Black)}				
+								let compGameState = userGameState {cur_user = Black, cur_position = (Position (xcord - 4) (ycord - 3)),cur_board = (insertElem (cur_board userGameState) (Position (xcord - 4) (ycord - 3)) Black)}				
 								playGame compGameState
 					else do
 						putStrLn "Nieprawidlowe wspolrzedne, wprowadz jeszcze raz \n"
