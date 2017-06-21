@@ -19,7 +19,6 @@ instance Eq Board where
 	(Board b1) == (Board b2) = b1 == b2
 
 
-	
 -- Show for Board implementation	
 instance Show Board where
 	show (Board b) = show1Row ++ "  \n" ++ showBoard b	
@@ -87,16 +86,18 @@ isGameWon (Board board) pos elem = ((fiveInRow board pos elem 1 0) || (fiveInRow
 --check---- 6 bo dwa razy bierze ten od ktorego zaczyna chyba
 fiveInRow :: [[Element]] -> Position -> Element -> Int -> Int -> Bool
 fiveInRow board (Position x y) elem vec1 vec2 = (((length ls1) + (length ls2)) == 6) where
-		ls1 = takeWhile (== elem) [((board !! xx) !! yy) | xx <- [x,x+vec1..], yy <- [y,y+vec2..]]
-		ls2 = takeWhile (== elem) [((board !! xx) !! yy) | xx <- [x,x-vec1..], yy <- [y,y-vec2..]]
-
+		ls1 = takeWhile (== elem) [((board !! yy) !! xx) | xx <- [x,(x+vec1)..x ], yy <- [y,(y+vec2)..]]
+		ls2 = takeWhile (== elem) [((board !! yy) !! xx) | xx <- [x,(x-vec1)..], yy <- [y,(y-vec2)..]]
 
 
 -- Test -----------
 testisFull = isFull (newFullPar 3)
 testisFull1 = isFull (newBoardPar 3)
+testWon x y board = isGameWon board (Position x y) Black
 test1 x y board= insertElem board (Position x y) Black
 test2 = insertElem (insertElem (newBoard) (Position 4 4) Black) (Position 5 4) White
 test3 = insertElem test2 (Position 5 5) Black
 
+
 	
+
