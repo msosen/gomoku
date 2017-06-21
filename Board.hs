@@ -81,7 +81,7 @@ isRowFilled (e:es) = (e /= Empty) && (isRowFilled es)
 --Is Game Won
 --using current position and Element from main
 isGameWon :: Board -> Position -> Element -> Bool
-isGameWon (Board board) pos elem = ((fiveInRow board pos elem 1 0) || (fiveInRow board pos elem 1 (-1)) ||(fiveInRow board pos elem 0 1) || (fiveInRow board pos elem (-1) 1))
+isGameWon (Board board) pos elem = ((fiveInRow board pos elem 1 0) || (fiveInRow board pos elem 1 1) ||(fiveInRow board pos elem 0 1) || (fiveInRow board pos elem (-1) 1))
 
 --check---- 6 bo dwa razy bierze ten od ktorego zaczyna chyba
 fiveInRow :: [[Element]] -> Position -> Element -> Int -> Int -> Bool
@@ -100,4 +100,3 @@ test3 = insertElem test2 (Position 5 5) Black
 
 
 	
-
